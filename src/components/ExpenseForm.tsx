@@ -4,6 +4,8 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {categories} from "../categories.ts";
 
+
+
 const schema = z.object({
     description: z.string().min(3, {message: "Description should be at least 3 characters."}).max(50),
     amount: z.number({invalid_type_error: "Amount field is required."}).min(0.01).max(100_000),
@@ -12,9 +14,16 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function ExpenseForm() {
-    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({resolver: zodResolver(schema)})
-    return <form onSubmit={handleSubmit(data => console.log(data))}>
+interface Props {
+    onSubmit: (data: FormData) => void;
+}
+
+export default function ExpenseForm({onSubmit}: Props) {
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<FormData>({resolver: zodResolver(schema)})
+    return <form onSubmit={handleSubmit((data) => {
+        onSubmit(data);
+        reset();
+    })}>
         <div className="mb-3">
             <label htmlFor="description" className="form-label">Description</label>
             <input {...register("description")} id="description" type="text" className="form-control"/>

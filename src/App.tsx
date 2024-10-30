@@ -21,7 +21,9 @@ export default function App() {
 
     return <div className="p-5">
         <div className="mb-5">
-            <ExpenseForm />
+            <ExpenseForm onSubmit={(data => {
+                setExpenses([...expenses, {...data, id: expenses.length}])
+            })} />
         </div>
         <div className="mb-3">
             <ExpenseFilter onSelectCategory={(category => setSelectedCategory(category))} />

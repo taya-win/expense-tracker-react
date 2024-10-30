@@ -4,7 +4,6 @@ import ExpenseFilter from "./components/ExpenseFilter.tsx";
 import ExpenseForm from "./components/ExpenseForm.tsx";
 
 
-export const categories = ["Groceries", "Utilities", "Entertainment"];
 
 export default function App() {
     const [expenses, setExpenses] = useState([
